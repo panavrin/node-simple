@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Boilerplate</title>
+		<script src="js/jquery.min.js"></script>
+	</head>
+	<body>
+    <div><br><br></div>
+    <div>
+      <button id = "servertime">click to get server time.</button>
+    </div>
+    <div><br><br></div>
+    <div>
+      <button id = "counter">Increase a counter</button>
+    </div>
+    <div><br><br></div>
+    <div>
+      Name: <input type="text" id = "name"><br>
+      <button id = "updateName">updateName</button>
+    </div>
+    <div><br><br></div>
+    <div>
+      FirstName: <input type="text" id = "fname"><br>
+      Last Name: <input type="text" id = "lname"><br>
+      <button id = "updateName2">updateName2</button>
+    </div>
+    <div><br><br></div>
+    <div>
+      <button id = "getName">getName</button>
+    </div>
+
+		<script>
+			$(document).ready(function(){
+        alert("ready");
+
+        $("#servertime").click(function(){
+          $.get("/servertime", function(response){
+            alert(response);
+          });
+        });
+
+        $("#counter").click(function(){
+          $.get("/counter", function(response){
+            alert(response);
+          });
+        });
+
+        $("#getName").click(function(){
+          $.get("/name", function(response){
+            alert(JSON.stringify(response));
+          });
+        });
+
+        $("#updateName").click(function(){
+          var input = $("#name").val();
+          console.log(input);
+          $.post("/name",JSON.stringify({name:input}), function(response){
+            alert(JSON.stringify(response));
+          }, "json");
+        });
+
+        $("#updateName2").click(function(){
+          var fname = $("#fname").val();
+          var lname = $("#lname").val();
+          $.get("/name/" + fname + '/' + lname, function(response){
+            alert(JSON.stringify(response));
+          }, "json");
+        });
+
+      })
+		</script>
+
+
+	</body>
+</html>
